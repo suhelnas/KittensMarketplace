@@ -1,0 +1,8 @@
+var path = require('path')
+
+module.exports = {
+  'config':          './.migration_config.json',
+  'migrations-path': 'server/database/migrations',
+  'models-path': 'server/database/models',
+  'seeders-path': 'server/database/seeders'
+};
