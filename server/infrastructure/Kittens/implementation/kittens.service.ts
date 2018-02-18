@@ -4,6 +4,7 @@ export interface IKittensService{
   saveKitten(textFields,file):Promise<any>;
   kittenList():Promise<any>;
   buyKitten(id):Promise<any>;
+  getKitty(id):Promise<any>;
 }
 
 export  class KittensService implements IKittensService{
@@ -96,5 +97,22 @@ export  class KittensService implements IKittensService{
       return promise;
     })
 
+  }
+  getKitty(id):Promise<any>{
+    let dbConn = global['DbConn'];
+    let includes  = {
+    where:{Id:id},
+      include:[
+        {
+          model:dbConn.models.file,
+          required:true
+        }
+      ]
+    };
+    let promise = dbConn.models.kittenProfile.find(includes)
+    promise.then(function (data) {
+      return data;
+    })
+    return promise;
   }
 }

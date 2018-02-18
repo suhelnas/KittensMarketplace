@@ -24,6 +24,13 @@ class KittensController {
             return util_service_1.Util.sendResponse(err, data, res);
         });
     }
+    static getKitty(req, res) {
+        let kittenService = new kittens_service_1.KittensService();
+        let promise = kittenService.getKitty(req.params.id);
+        return global['DbConn'].DefaultCallbackHandle(promise, function (err, data) {
+            return util_service_1.Util.sendResponse(err, data, res);
+        });
+    }
 }
 exports.KittensController = KittensController;
 //# sourceMappingURL=kittens.controller.js.map

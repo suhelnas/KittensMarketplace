@@ -28,4 +28,12 @@ export class KittensController {
      })
    }
 
+   static getKitty(req: Request,res: Response){
+     let kittenService:IKittensService = new KittensService();
+     let promise = kittenService.getKitty(req.params.id);
+     return global['DbConn'].DefaultCallbackHandle(promise,function (err,data) {
+       return Util.sendResponse(err,data,res)
+     })
+   }
+
 }

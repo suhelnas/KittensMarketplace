@@ -8,6 +8,7 @@ class KittenRoutes {
         router.post('/api/add/kitten', upload.single("file"), kittens_controller_1.KittensController.addKitten);
         router.get('/api/kitten/list', kittens_controller_1.KittensController.getKittenList);
         router.get('/api/buy/kitten/:id', kittens_controller_1.KittensController.buyKitten);
+        router.get('/api/get/kitty/:id', kittens_controller_1.KittensController.getKitty);
     }
 }
 exports.KittenRoutes = KittenRoutes;

@@ -87,6 +87,23 @@ class KittensService {
             return promise;
         });
     }
+    getKitty(id) {
+        let dbConn = global['DbConn'];
+        let includes = {
+            where: { Id: id },
+            include: [
+                {
+                    model: dbConn.models.file,
+                    required: true
+                }
+            ]
+        };
+        let promise = dbConn.models.kittenProfile.find(includes);
+        promise.then(function (data) {
+            return data;
+        });
+        return promise;
+    }
 }
 exports.KittensService = KittensService;
 //# sourceMappingURL=kittens.service.js.map

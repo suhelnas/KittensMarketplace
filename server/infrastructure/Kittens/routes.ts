@@ -7,6 +7,7 @@ export class KittenRoutes {
    router.post('/api/add/kitten',upload.single("file"),KittensController.addKitten)
    router.get('/api/kitten/list',KittensController.getKittenList)
    router.get('/api/buy/kitten/:id',KittensController.buyKitten)
+   router.get('/api/get/kitty/:id',KittensController.getKitty);
   }
 }
 
