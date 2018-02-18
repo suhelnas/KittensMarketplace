@@ -1,36 +1,44 @@
+
+import {TransactionOptions} from "sequelize";
 export interface IKittensService{
   saveKitten(textFields,file):Promise<any>;
   kittenList():Promise<any>;
-  sayHello():Promise<any>;
+  buyKitten(id):Promise<any>;
 }
 
 export  class KittensService implements IKittensService{
-  saveKitten(textField,file):Promise<any>{
+  saveKitten(textField,file):Promise<any> {
     let dbConn = global['DbConn'];
-    let transactionOption = global['DbConn'].TransactionOption;
     console.log(file);
-    if(file){
-      let obj = {
-        Destination:file.destination,
-        MimeType:file.mimetype,
-        NameOnFile:file.filename,
-        Path:file.path,
-        Size:file.size
-
+    if (file) {
+      return dbConn.transaction(dbConn.TransformOption, function (tx) {
+      let transactionOption = {transaction: tx};
+      let obj1 = {
+        Destination: file.destination,
+        MimeType: file.mimetype,
+        NameOnFile: file.filename,
+        Path: file.path,
+        Size: file.size
       }
-      let promise = dbConn.SaveData(dbConn.models.file,obj,transactionOption);
+      let promise = dbConn.SaveData(dbConn.models.file, obj1, transactionOption);
       promise = promise.then(function (data) {
+        return data.Id;
+      })
+      promise = promise.then(function (fileId) {
         let obj = {
-          FileId:data.Id,
-          Price:textField.Price,
-          Age:textField.Age,
-          OriginalName:file.originalname
-        }
-        return dbConn.SaveData(dbConn.models.kittenProfile,obj,transactionOption)
+          FileId: fileId,
+          Price: textField.Price,
+          Age: textField.Age,
+          OriginalName: file.originalname
+        };
+        return dbConn.SaveData(dbConn.models.kittenProfile, obj, transactionOption).then(function (data) {
+          return fileId;
+        });
       })
       return promise;
-    }
-    else throw new Error("Pic not uploaded")
+    })
+  }
+  else throw new Error("Pic not uploaded")
   }
 
   kittenList(){
@@ -45,14 +53,48 @@ export  class KittensService implements IKittensService{
     };
     let promise = dbConn.models.kittenProfile.findAll(includes);
     promise = promise.then(function(data){
-      console.log(data);
-      return data;
+      let list = [];
+      data.forEach(function(element){
+        let obj = {
+          Id:element.Id,
+          FileId:element.FileId,
+          Price:element.Price,
+          Age:element.Age,
+          Name:element.file.NameOnFile
+        };
+        list.push(obj);
+      });
+      return list;
     });
     return promise;
   }
-  sayHello(){
-    return new Promise(function (resolve, reject) {
-      resolve("success")
+
+
+  buyKitten(id):Promise<any>{
+    let dbConn = global['DbConn'];
+    return dbConn.transaction(dbConn.TransactionOption,function (tx) {
+      let transactionOption = {transaction:tx};
+      let promise = dbConn.models.kittenProfile.find({where:{Id:id}});
+      promise = promise.then(function(data){
+        return data.FileId;
+      })
+
+      promise = promise.then(function (fileId) {
+        let dataToBeUpdated = {IsDeleted:true}
+        var options = {where: {Id: id}, transactionOption};
+        return dbConn.UpdateData(dbConn.models.kittenProfile,dataToBeUpdated,options).then(function () {
+          return fileId;
+        })
+      })
+       promise = promise.then(function (fileId) {
+         let dataToBeUpdated = {IsDeleted:true}
+         var options = {where: {Id: fileId}, transactionOption};
+         return dbConn.UpdateData(dbConn.models.file,dataToBeUpdated,options).then(function () {
+           return fileId;
+         })
+       })
+      return promise;
     })
+
   }
 }

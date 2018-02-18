@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
@@ -9,6 +10,7 @@ class RoutesConf {
         let mediaTempDirectory = path.join(mediaDirectory, 'kittens');
         fs.existsSync(mediaDirectory) || fs.mkdirSync(mediaDirectory);
         fs.existsSync(mediaTempDirectory) || fs.mkdirSync(mediaTempDirectory);
+        application.use('/api', express.static('undefined/kittens'));
         application.use(bodyParser.urlencoded({ extended: false, limit: 10000000 }));
         application.use(bodyParser.json({ limit: '1000mb' }));
     }

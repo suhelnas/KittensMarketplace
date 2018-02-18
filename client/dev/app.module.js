@@ -17,18 +17,20 @@ const edit_component_1 = require("./app/kittens/edit.component");
 const forms_1 = require("@angular/forms");
 const kittens_service_1 = require("./app/kittens/services/kittens.service");
 const http_1 = require("@angular/common/http");
+const kitten_list_component_1 = require("./app/kittens/kitten.list.component");
 let allRoutes = [];
-let appRoutes = { path: 'app', component: core_component_1.CoreComponent, children: [{ path: 'add/kitten', component: edit_component_1.EditComponent }] };
-let editRoutes = { path: 'add/kitten', component: edit_component_1.EditComponent, children: [] };
+let appRoutes = { path: 'app', component: core_component_1.CoreComponent, children: [
+        { path: 'item/list', component: kitten_list_component_1.KittenListComponent },
+        { path: 'add/kitten', component: edit_component_1.EditComponent }
+    ] };
 allRoutes.push(appRoutes);
-allRoutes.push(editRoutes);
 allRoutes.push({ path: '**', redirectTo: 'app' });
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     core_1.NgModule({
         declarations: [
-            app_component_1.AppComponent, core_component_1.CoreComponent, topbar_component_1.TopbarComponent, edit_component_1.EditComponent
+            app_component_1.AppComponent, core_component_1.CoreComponent, topbar_component_1.TopbarComponent, edit_component_1.EditComponent, kitten_list_component_1.KittenListComponent
         ],
         imports: [
             platform_browser_1.BrowserModule, ngx_bootstrap_1.AlertModule.forRoot(), router_1.RouterModule.forRoot(allRoutes, { useHash: true }), forms_1.FormsModule, http_1.HttpClientModule

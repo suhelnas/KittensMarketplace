@@ -17,9 +17,9 @@ class KittensController {
             return util_service_1.Util.sendResponse(err, data, res);
         });
     }
-    static sayHello(req, res) {
+    static buyKitten(req, res) {
         let kittenService = new kittens_service_1.KittensService();
-        let promise = kittenService.sayHello();
+        let promise = kittenService.buyKitten(req.params.id);
         return global['DbConn'].DefaultCallbackHandle(promise, function (err, data) {
             return util_service_1.Util.sendResponse(err, data, res);
         });

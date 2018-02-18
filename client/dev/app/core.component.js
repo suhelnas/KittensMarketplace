@@ -15,9 +15,6 @@ let CoreComponent = class CoreComponent {
     constructor(_router) {
         this._router = _router;
     }
-    addKitten() {
-        this._router.navigate(['/add/kitten']);
-    }
 };
 CoreComponent = __decorate([
     core_1.Component({

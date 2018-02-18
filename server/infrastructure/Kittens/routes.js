@@ -5,8 +5,9 @@ const multer = require("multer");
 var upload = multer({ dest: global['mediaBaseDirPath'] + '/kittens/' });
 class KittenRoutes {
     static init(router) {
-        router.post('/add/kitten', upload.single("file"), kittens_controller_1.KittensController.addKitten);
-        router.get('/kitten/list', kittens_controller_1.KittensController.getKittenList);
+        router.post('/api/add/kitten', upload.single("file"), kittens_controller_1.KittensController.addKitten);
+        router.get('/api/kitten/list', kittens_controller_1.KittensController.getKittenList);
+        router.get('/api/buy/kitten/:id', kittens_controller_1.KittensController.buyKitten);
     }
 }
 exports.KittenRoutes = KittenRoutes;

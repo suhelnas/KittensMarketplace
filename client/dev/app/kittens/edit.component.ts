@@ -32,12 +32,13 @@ formData;
   }
 
     submitForm(value) {
+    let that = this;
     console.log(this.postModel);
     console.log(value);
       this.postModel.Image=null;
     let promise = this._kittensService.addNewKitten(this.formData)
-     promise.subscribe(function (result) {
-       this._router.navigate(['/app'])
+     promise.then(function (result) {
+       that._router.navigate(['/app/item/list'])
      },function (err) {
      });
     }

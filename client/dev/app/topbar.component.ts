@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 export class TopbarComponent{
 
   constructor(private _router: Router) {
-    this._router.navigate(['/app'])
+    this._router.navigate(['/app/item/list'])
   }
 }
 

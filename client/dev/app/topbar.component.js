@@ -14,7 +14,7 @@ const router_1 = require("@angular/router");
 let TopbarComponent = class TopbarComponent {
     constructor(_router) {
         this._router = _router;
-        this._router.navigate(['/app']);
+        this._router.navigate(['/app/item/list']);
     }
 };
 TopbarComponent = __decorate([

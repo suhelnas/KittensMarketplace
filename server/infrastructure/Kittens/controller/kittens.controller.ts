@@ -20,13 +20,12 @@ export class KittensController {
       return Util.sendResponse(err,data,res)
     })
   }
+   static buyKitten(req: Request,res: Response){
+     let kittenService:IKittensService = new KittensService();
+     let promise = kittenService.buyKitten(req.params.id);
+     return global['DbConn'].DefaultCallbackHandle(promise,function (err,data) {
+       return Util.sendResponse(err,data,res)
+     })
+   }
 
-  static sayHello(req:Request,res:Response) {
-    let kittenService: IKittensService = new KittensService();
-    let promise = kittenService.sayHello();
-    return global['DbConn'].DefaultCallbackHandle(promise, function (err, data) {
-      return Util.sendResponse(err, data,res)
-    });
-
-  }
 }

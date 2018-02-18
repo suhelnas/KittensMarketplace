@@ -11,16 +11,17 @@ import {EditComponent} from './app/kittens/edit.component';
 import {FormsModule} from '@angular/forms';
 import {KittensService} from './app/kittens/services/kittens.service';
 import {HttpClientModule} from "@angular/common/http";
-let allRoutes  =  []
-let appRoutes:any = {path:'app',component:CoreComponent,children :[{ path:'add/kitten',component:EditComponent}]};
-let editRoutes:any = {path:'add/kitten',component:EditComponent,children:[]};
+import {KittenListComponent} from './app/kittens/kitten.list.component';
+let allRoutes  =  [];
+let appRoutes:any = {path:'app',component:CoreComponent,children :[
+  {path:'item/list',component:KittenListComponent},
+  {path:'add/kitten',component:EditComponent}]};
 
 allRoutes.push(appRoutes)
-allRoutes.push(editRoutes);
 allRoutes.push({path: '**', redirectTo: 'app'});
 @NgModule({
   declarations: [
-    AppComponent,CoreComponent,TopbarComponent,EditComponent
+    AppComponent,CoreComponent,TopbarComponent,EditComponent,KittenListComponent
   ],
   imports: [
     BrowserModule,AlertModule.forRoot(),RouterModule.forRoot(allRoutes, { useHash: true}), FormsModule,HttpClientModule

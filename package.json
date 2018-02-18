@@ -5,7 +5,7 @@
   "scripts": {
     "migration": "tsc && sequelize db:migrate",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -26,6 +26,7 @@
     "core-js": "^2.4.1",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
+    "mime": "^2.2.0",
     "multer": "^1.3.0",
     "mysql2": "^1.5.2",
     "ngx-bootstrap": "^2.0.2",

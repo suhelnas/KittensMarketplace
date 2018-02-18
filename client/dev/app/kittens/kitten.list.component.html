@@ -1,0 +1,23 @@
+<div class="clearfix">
+  <div>
+  <button class="btn-primary col-md-2" (click)="addKitten()">Sell</button>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <th></th>
+    <th>Price</th>
+    <th>Age</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of kittenList">
+      <td><img [src]="'/api/'+c.Name" style="width: 100px"></td>
+      <td>{{c.Price}}</td>
+      <td>{{c.Age}}</td>
+      <td><button (click)="buy(c.Id)">Buy</button></td>
+    </tr>
+    </tbody>
+
+
+  </table>
+</div>

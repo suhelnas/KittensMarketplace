@@ -10,46 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
-const router_1 = require("@angular/router");
 const kittens_service_1 = require("./services/kittens.service");
-let EditComponent = class EditComponent {
+const router_1 = require("@angular/router");
+let KittenListComponent = class KittenListComponent {
     constructor(_router, _kittensService) {
         this._router = _router;
         this._kittensService = _kittensService;
-        this.postModel = {
-            Price: null,
-            Age: null
-        };
     }
-    getFiles(fileInput) {
-        let fileList = fileInput.target.files;
-        if (fileList.length > 0) {
-            let file = fileList[0];
-            this.formData = new FormData();
-            this.formData.append('file', file, file.name);
-            this.formData.append('Price', this.postModel.Price);
-            this.formData.append('Age', this.postModel.Age);
-        }
-        console.log(this.postModel);
-    }
-    submitForm(value) {
+    ngOnInit() {
         let that = this;
-        console.log(this.postModel);
-        console.log(value);
-        this.postModel.Image = null;
-        let promise = this._kittensService.addNewKitten(this.formData);
+        let promise = this._kittensService.getList();
         promise.then(function (result) {
-            that._router.navigate(['/app/item/list']);
-        }, function (err) {
+            that.kittenList = result.data;
+        });
+    }
+    addKitten() {
+        this._router.navigate(['/app/add/kitten']);
+    }
+    buy(id) {
+        let that = this;
+        let promise = this._kittensService.buyKitten(id);
+        promise.then(function (result) {
+            window.location.reload();
         });
     }
 };
-EditComponent = __decorate([
+KittenListComponent = __decorate([
     core_1.Component({
-        selector: 'edit-component',
-        templateUrl: 'edit.component.html'
+        selector: 'kitten-list',
+        templateUrl: 'kitten.list.component.html'
     }),
     __metadata("design:paramtypes", [router_1.Router, kittens_service_1.KittensService])
-], EditComponent);
-exports.EditComponent = EditComponent;
-//# sourceMappingURL=edit.component.js.map
+], KittenListComponent);
+exports.KittenListComponent = KittenListComponent;
+//# sourceMappingURL=kitten.list.component.js.map

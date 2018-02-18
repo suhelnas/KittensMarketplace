@@ -8,9 +8,5 @@ import {Router} from '@angular/router';
 
 export class CoreComponent {
   constructor(private _router: Router){
-
-  }
-  addKitten(){
-    this._router.navigate(['/add/kitten'])
   }
 }

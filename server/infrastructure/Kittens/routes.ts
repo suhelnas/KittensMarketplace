@@ -4,8 +4,9 @@ import * as multer from 'multer'
 var upload = multer({ dest: global['mediaBaseDirPath'] + '/kittens/' });
 export class KittenRoutes {
   static init(router: express.Router) {
-   router.post('/add/kitten',upload.single("file"),KittensController.addKitten)
-   router.get('/kitten/list',KittensController.getKittenList)
+   router.post('/api/add/kitten',upload.single("file"),KittensController.addKitten)
+   router.get('/api/kitten/list',KittensController.getKittenList)
+   router.get('/api/buy/kitten/:id',KittensController.buyKitten)
   }
 }
 
